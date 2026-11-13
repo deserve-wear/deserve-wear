@@ -15,30 +15,6 @@
         .fb-eserve { color: #4b5563; }
         .fb-w { color: #2563eb; font-size: 2rem; margin-left: 4px; }
         .fb-ear { color: #d97706; }
-
-        /* See All Product & Ultra Slim Orange-Red Shadow Box */
-        #btn-see-all, .slogan-box {
-            box-shadow: 0 0 12px rgba(249, 115, 22, 0.45), 0 0 5px rgba(239, 68, 68, 0.35);
-            border: 1px solid rgba(249, 115, 22, 0.65);
-            transition: all 0.3s ease;
-        }
-        #btn-see-all:hover {
-            box-shadow: 0 0 18px rgba(249, 115, 22, 0.75), 0 0 8px rgba(239, 68, 68, 0.55);
-        }
-
-        /* Immediate Start & Slow Smooth Slider Animation */
-        @keyframes slideText {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-100%); }
-        }
-        .slider-container {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .slider-text {
-            display: inline-block;
-            animation: slideText 25s linear infinite;
-        }
     </style>
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
@@ -101,16 +77,8 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-3 py-4 flex-1 w-full">
-        <div class="mb-6 space-y-3">
-            
-            <!-- Minimalist Ultra-Thin Slogan Box -->
-            <div class="bg-white text-neutral-900 py-1 px-3 rounded-xl slider-container slogan-box">
-                <div class="slider-text text-[11px] font-semibold tracking-wide text-orange-600">
-                    ✧ ট্রেন্ডি ফ্যাশনে নিজেকে প্রকাশ করুন ✧ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Deserve Wear - Premium Quality Collection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 আস্থার সাথে পরিধান করুন
-                </div>
-            </div>
-
+    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
+        <div class="mb-6 space-y-4">
             <div class="flex justify-between items-center px-1">
                 <h1 id="t-all-prod-heading" class="text-2xl font-bold">✨ Trendy Collection</h1>
                 <!-- Language Switcher -->
@@ -121,24 +89,23 @@
             </div>
             
             <div class="flex gap-2">
-                <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-2.5 text-sm focus:outline-none">
-                <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-5 py-2.5 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
+                <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-3 text-sm focus:outline-none">
+                <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
             <!-- Left: Popular Now, Right: See All Product -->
-            <div class="flex justify-between items-center pt-0.5">
-                <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
+            <div class="flex justify-between items-center pt-1">
+                <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
-                <a href="products.html" id="btn-see-all" class="bg-white text-neutral-900 px-5 py-2 rounded-full text-xs font-bold hover:bg-neutral-50 transition">See All Product ➔</a>
+                <a href="products.html" id="btn-see-all" class="bg-white text-neutral-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-neutral-50 transition">See All Product ➔</a>
             </div>
         </div>
 
+        <!-- Product Grid (No changes here, just ensuring it renders) -->
         <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3"></div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="max-w-4xl mx-auto w-full px-3 mt-12 pb-8">
-        <div class="card-box px-6 py-6 space-y-4 text-left">
+        <!-- Moved Card (Deserve Wear Card) -->
+        <div class="card-box px-6 py-6 space-y-4 text-left mt-8 mb-4">
             <div class="footer-brand inline-flex items-baseline">
                 <span><span class="fb-d">D</span><span class="fb-eserve">eserve</span></span>
                 <span class="ml-1.5"><span class="fb-w">W</span><span class="fb-ear">ear</span></span>
@@ -153,11 +120,16 @@
                 <p id="t-contact" class="text-xs font-bold tracking-widest text-amber-600 mb-3 uppercase">CONTACTS WITH US</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.facebook.com/profile.php?id=61596776030542" target="_blank" id="f-fb" class="flex items-center gap-1.5 bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-medium">🌐 ফেসবুক পেজ</a>
-                    <a href="https://wa.me/8801877476659?text=Hello" target="_blank" id="f-wa" class="flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium">💬 WhatsApp</a>
+                    <a href="https://wa.me/8801877476659?text=Hello" target="_blank" class="flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium">💬 WhatsApp</a>
                 </div>
             </div>
             <p id="t-copy" class="text-xs text-neutral-400 pt-2">© 2026 Deserve Wear. All rights reserved.</p>
         </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-4xl mx-auto w-full px-3 mt-4 pb-8 text-center">
+        <p id="t-copy-main" class="text-xs text-neutral-400">© 2026 Deserve Wear. All rights reserved.</p>
     </footer>
 
     <script>
@@ -239,6 +211,7 @@
             document.getElementById('t-contact').innerText = d.contact;
             document.getElementById('f-fb').innerText = d.fb;
             document.getElementById('t-copy').innerText = d.copy;
+            document.getElementById('t-copy-main').innerText = d.copy;
         }
 
         function renderProducts(filterText = '') {
