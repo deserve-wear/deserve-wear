@@ -16,19 +16,19 @@
         .fb-w { color: #2563eb; font-size: 2rem; margin-left: 4px; }
         .fb-ear { color: #d97706; }
 
-        /* See All Product & Slim Orange-Red Shadow Box */
+        /* See All Product & Ultra Slim Orange-Red Shadow Box */
         #btn-see-all, .slogan-box {
-            box-shadow: 0 0 15px rgba(249, 115, 22, 0.45), 0 0 6px rgba(239, 68, 68, 0.35);
+            box-shadow: 0 0 12px rgba(249, 115, 22, 0.45), 0 0 5px rgba(239, 68, 68, 0.35);
             border: 1px solid rgba(249, 115, 22, 0.65);
             transition: all 0.3s ease;
         }
         #btn-see-all:hover {
-            box-shadow: 0 0 20px rgba(249, 115, 22, 0.75), 0 0 10px rgba(239, 68, 68, 0.55);
+            box-shadow: 0 0 18px rgba(249, 115, 22, 0.75), 0 0 8px rgba(239, 68, 68, 0.55);
         }
 
-        /* Fast Start & Slow Smooth Slider Animation */
+        /* Immediate Start & Slow Smooth Slider Animation */
         @keyframes slideText {
-            0% { transform: translateX(10%); }
+            0% { transform: translateX(0%); }
             100% { transform: translateX(-100%); }
         }
         .slider-container {
@@ -101,12 +101,12 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
-        <div class="mb-6 space-y-4">
+    <main class="max-w-4xl mx-auto px-3 py-4 flex-1 w-full">
+        <div class="mb-6 space-y-3">
             
-            <!-- Ultra Slim Slogan Slider Box with Orange/Red Shadow -->
-            <div class="bg-white text-neutral-900 py-1.5 px-3 rounded-xl slider-container slogan-box">
-                <div class="slider-text text-[11px] sm:text-xs font-semibold tracking-wide text-orange-600">
+            <!-- Minimalist Ultra-Thin Slogan Box -->
+            <div class="bg-white text-neutral-900 py-1 px-3 rounded-xl slider-container slogan-box">
+                <div class="slider-text text-[11px] font-semibold tracking-wide text-orange-600">
                     ✧ ট্রেন্ডি ফ্যাশনে নিজেকে প্রকাশ করুন ✧ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Deserve Wear - Premium Quality Collection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 আস্থার সাথে পরিধান করুন
                 </div>
             </div>
@@ -121,15 +121,15 @@
             </div>
             
             <div class="flex gap-2">
-                <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-3 text-sm focus:outline-none">
-                <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
+                <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-2.5 text-sm focus:outline-none">
+                <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-5 py-2.5 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
             <!-- Left: Popular Now, Right: See All Product -->
-            <div class="flex justify-between items-center pt-1">
-                <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
+            <div class="flex justify-between items-center pt-0.5">
+                <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
-                <a href="products.html" id="btn-see-all" class="bg-white text-neutral-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-neutral-50 transition">See All Product ➔</a>
+                <a href="products.html" id="btn-see-all" class="bg-white text-neutral-900 px-5 py-2 rounded-full text-xs font-bold hover:bg-neutral-50 transition">See All Product ➔</a>
             </div>
         </div>
 
