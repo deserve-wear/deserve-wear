@@ -23,16 +23,21 @@
             <a href="index.html" class="flex items-center gap-1.5 text-sm font-semibold text-neutral-800 bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 rounded-xl transition">
                 ← হোমপেজে ফিরে যান
             </a>
-            <h1 class="text-sm font-bold text-neutral-900">আমার অর্ডারসমূহ</h1>
+            <div class="flex items-center gap-2">
+                <button onclick="switchTab('active')" id="tab-active-btn" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-900 text-white transition">অর্ডার হিস্ট্রি</button>
+                <button onclick="switchTab('trash')" id="tab-trash-btn" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-100 text-neutral-600 transition">🗑️ ট্র্যাশ বিন</button>
+            </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-3 py-8 flex-1 w-full space-y-6">
         <div class="card-box p-6 bg-white space-y-6">
-            <h2 class="text-lg font-bold border-b pb-3">আপনার পার্চেস হিস্ট্রি ও ট্র্যাকিং</h2>
+            <div class="flex justify-between items-center border-b pb-3">
+                <h2 id="section-title" class="text-lg font-bold">আপনার পার্চেস হিস্ট্রি ও ট্র্যাকিং</h2>
+            </div>
             
             <div id="orders-container" class="space-y-4">
-                <!-- Orders will be dynamically loaded here with Tracking Codes -->
+                <!-- Orders will be dynamically loaded here -->
             </div>
         </div>
 
@@ -60,12 +65,10 @@
     </main>
 
     <script>
-        // Sample or LocalStorage loaded orders with Tracking Codes
-        function loadOrders() {
-            const container = document.getElementById('orders-container');
-            
-            // Mock orders matching user's layout, now equipped with explicit Tracking Codes
-            const orders = [
+        let currentTab = 'active';
+
+        function getStoredData() {
+            let active = JSON.parse(localStorage.getItem('deserve_user_orders')) || [
                 {
                     id: "2",
                     trackingCode: "DW-TRK-84920",
@@ -78,7 +81,7 @@
                 {
                     id: "1",
                     trackingCode: "DW-TRK-73105",
-                    status: "কনফার্মড",
+                    status: "ডেলিভারড",
                     items: [
                         { name: "Oversized Drop Shoulder Tee", color: "Black", size: "M", qty: 2, price: 650 },
                         { name: "Zipper Hoodie", color: "Black", size: "L", qty: 1, price: 1650 },
@@ -89,20 +92,55 @@
                     total: 4660
                 }
             ];
+            let trash = JSON.parse(localStorage.getItem('deserve_trash_orders')) || [];
+            return { active, trash };
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            if(tab === 'active') {
+                document.getElementById('tab-active-btn').className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-900 text-white transition";
+                document.getElementById('tab-trash-btn').className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-100 text-neutral-600 transition";
+                document.getElementById('section-title').innerText = "আপনার পার্চেস হিস্ট্রি ও ট্র্যাকিং";
+            } else {
+                document.getElementById('tab-active-btn').className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-100 text-neutral-600 transition";
+                document.getElementById('tab-trash-btn').className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-neutral-900 text-white transition";
+                document.getElementById('section-title').innerText = "🗑️ ট্র্যাশ বিন (আজীবন সংরক্ষিত)";
+            }
+            loadOrders();
+        }
+
+        function loadOrders() {
+            const container = document.getElementById('orders-container');
+            let data = getStoredData();
+            let list = currentTab === 'active' ? data.active : data.trash;
+
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-center py-8 text-neutral-400 text-sm">${currentTab === 'active' ? 'আপনার কোনো অর্ডার হিস্ট্রি নেই' : 'ট্র্যাশ বিন খালি রয়েছে'}</p>`;
+                return;
+            }
 
             container.innerHTML = '';
 
-            orders.forEach(ord => {
+            list.forEach((ord, index) => {
                 let itemsHtml = ord.items.map(i => `<p class="text-xs sm:text-sm text-neutral-700">${i.name} (${i.color}, সাইজ: ${i.size}) x ${i.qty} - ৳${i.price * i.qty}</p>`).join('');
+                let statusBg = ord.status === "ডেলিভারড" ? "bg-blue-50 text-blue-600" : "bg-emerald-50 text-emerald-600";
+
+                // Active ট্যাবে শুধু ট্র্যাশে পাঠানোর 🗑️ বাটন থাকবে। Trash ট্যাবে কোনো ডিলিট বাটন থাকবে না, শুধু রিস্টোর অপশন থাকবে।
+                let actionBtn = currentTab === 'active' 
+                    ? `<button onclick="moveToTrash(${index})" class="absolute top-3 right-3 text-neutral-400 hover:text-red-600 p-1 text-xs font-bold transition" title="ট্র্যাশে পাঠান">🗑️</button>`
+                    : `<button onclick="restoreOrder(${index})" class="absolute top-3 right-3 text-neutral-500 hover:text-emerald-600 p-1 text-xs font-bold transition" title="পুনরুদ্ধার করুন">♻️ রিস্টোর</button>`;
 
                 container.innerHTML += `
-                    <div class="bg-neutral-50 border border-neutral-200 p-4 rounded-2xl space-y-3">
-                        <div class="flex justify-between items-center border-b pb-2">
+                    <div class="bg-neutral-50 border border-neutral-200 p-4 rounded-2xl space-y-3 relative">
+                        ${actionBtn}
+                        
+                        <div class="flex justify-between items-center border-b pb-2 pr-16">
                             <div>
                                 <span class="font-bold text-sm">অর্ডার #${ord.id}</span>
-                                <span class="ml-2 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">ট্র্যাকিং কোড: ${ord.trackingCode}</span>
+                                <span class="ml-2 bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">ট্র্যাকিং: ${ord.trackingCode}</span>
                             </div>
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">${ord.status}</span>
+                            <span class="text-xs font-bold ${statusBg} px-2.5 py-1 rounded-full">${ord.status}</span>
                         </div>
                         <div class="space-y-1">
                             ${itemsHtml}
@@ -114,6 +152,28 @@
                     </div>
                 `;
             });
+        }
+
+        // Move active order to Trash
+        function moveToTrash(index) {
+            let data = getStoredData();
+            let removed = data.active.splice(index, 1)[0];
+            data.trash.push(removed);
+
+            localStorage.setItem('deserve_user_orders', JSON.stringify(data.active));
+            localStorage.setItem('deserve_trash_orders', JSON.stringify(data.trash));
+            loadOrders();
+        }
+
+        // Restore order back to active list
+        function restoreOrder(index) {
+            let data = getStoredData();
+            let restored = data.trash.splice(index, 1)[0];
+            data.active.push(restored);
+
+            localStorage.setItem('deserve_user_orders', JSON.stringify(data.active));
+            localStorage.setItem('deserve_trash_orders', JSON.stringify(data.trash));
+            loadOrders();
         }
 
         loadOrders();
