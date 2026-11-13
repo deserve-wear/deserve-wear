@@ -9,15 +9,23 @@
     <style> 
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; } 
         .card-box { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
-        .brand-gradient { background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-logo { font-family: serif; font-style: italic; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+        .brand-d { color: #dc2626; font-size: 1.7rem; }
+        .brand-eserve { color: #4b5563; }
+        .brand-w { color: #2563eb; font-size: 1.7rem; margin-left: 3px; }
+        .brand-ear { color: #d97706; }
     </style>
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
 
     <header class="sticky top-0 z-50 px-3 pt-3">
         <div class="card-box relative mx-auto flex max-w-4xl items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md">
-            <a href="index.html" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1">
-                ← হোমপেজে ফিরে যান
+            <a href="index.html" class="flex items-center gap-1.5 text-sm font-semibold text-neutral-800 bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 rounded-xl transition">
+                ← Back
+            </a>
+            <a href="index.html" class="brand-logo flex items-baseline">
+                <span><span class="brand-d">D</span><span class="brand-eserve">eserve</span></span>
+                <span class="ml-1"><span class="brand-w">W</span><span class="brand-ear">ear</span></span>
             </a>
             <a href="cart.html" class="flex items-center gap-2 bg-neutral-100 hover:bg-neutral-200 px-3.5 py-2 rounded-full text-sm font-medium transition">
                 <span>কার্ট</span>
@@ -28,8 +36,6 @@
 
     <main class="max-w-4xl mx-auto px-3 py-8 flex-1 w-full">
         <div class="card-box p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white">
-            
-            <!-- Product Image (4 Color Variant Support) -->
             <div class="relative aspect-[4/5] bg-neutral-100 rounded-2xl overflow-hidden">
                 <img id="prod-img" src="" class="w-full h-full object-cover">
             </div>
@@ -43,7 +49,6 @@
                         প্রিমিয়াম কটন ফ্যাব্রিক দিয়ে তৈরি অত্যন্ত আরামদায়ক ও ট্রেন্ডি পোশাক। কালার ও কোয়ালিটি ১০০% গ্যারান্টিযুক্ত।
                     </p>
 
-                    <!-- 4 Color Options Box -->
                     <div class="mt-4">
                         <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (৪টি অপশন): <span id="selected-color-text" class="text-neutral-900">Black</span></label>
                         <div class="flex gap-2 flex-wrap" id="color-options">
@@ -54,7 +59,6 @@
                         </div>
                     </div>
 
-                    <!-- Size Box -->
                     <div class="mt-4">
                         <label class="block text-xs font-semibold text-neutral-500 mb-2">সাইজ:</label>
                         <div class="flex gap-2">
@@ -66,13 +70,11 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="grid grid-cols-2 gap-3 pt-4">
                     <button onclick="addToCart()" class="bg-neutral-900 text-white py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition shadow-sm">কার্টে যোগ করুন</button>
                     <button onclick="buyNow()" class="bg-amber-600 text-white py-3 rounded-2xl font-medium text-sm hover:bg-amber-700 transition shadow-sm">এখনই কিনুন</button>
                 </div>
 
-                <!-- Chat Box Option -->
                 <div class="border-t pt-4 text-center">
                     <a href="javascript:void(0)" onclick="openChat()" class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-emerald-100 transition w-full">
                         💬 চ্যাট করুন
@@ -83,14 +85,16 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="max-w-4xl mx-auto w-full px-3 mt-12 pb-8">
         <div class="card-box px-6 py-6 text-center space-y-4">
-            <h2 class="text-2xl font-black italic font-serif brand-gradient">Deserve Wear</h2>
-            <div class="flex flex-col gap-2 max-w-xs mx-auto py-2">
-                <a href="index.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">All Products</a>
-                <a href="cart.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">Cart</a>
-                <a href="orders.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">My Order</a>
+            <div class="brand-logo inline-flex items-baseline">
+                <span><span class="brand-d">D</span><span class="brand-eserve">eserve</span></span>
+                <span class="ml-1.5"><span class="brand-w">W</span><span class="brand-ear">ear</span></span>
+            </div>
+            <div class="flex flex-col items-start gap-2 max-w-[180px] mx-auto py-2">
+                <a href="index.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">All Products</a>
+                <a href="cart.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">Cart</a>
+                <a href="orders.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">My Order</a>
             </div>
             <div class="pt-2 border-t border-neutral-100">
                 <p class="text-xs font-bold tracking-widest text-amber-600 mb-3 uppercase">CONTACTS WITH US</p>
