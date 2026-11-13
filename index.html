@@ -9,7 +9,17 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card-box { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
-        .search-shadow { box-shadow: 0 0 15px rgba(0, 0, 0, 0.08), 0 2px 5px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.08); }
+        
+        /* High Highlight Orange-Red Shadow for Search Box & See All Product */
+        .search-shadow, #btn-see-all {
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.45), 0 0 6px rgba(239, 68, 68, 0.35);
+            border: 1px solid rgba(249, 115, 22, 0.65);
+            transition: all 0.3s ease;
+        }
+        .search-shadow:focus-within, #btn-see-all:hover {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.75), 0 0 10px rgba(239, 68, 68, 0.55);
+        }
+
         .footer-brand { font-family: serif; font-style: italic; font-weight: 800; font-size: 1.6rem; }
         .fb-d { color: #dc2626; font-size: 2rem; }
         .fb-eserve { color: #4b5563; }
@@ -77,8 +87,8 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
-        <div class="mb-6 space-y-4">
+    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full space-y-6">
+        <div class="space-y-4">
             <div class="flex justify-between items-center px-1">
                 <h1 id="t-all-prod-heading" class="text-2xl font-bold">✨ Trendy Collection</h1>
                 <!-- Language Switcher -->
@@ -88,12 +98,13 @@
                 </div>
             </div>
             
+            <!-- Search Box with Orange-Red Highlight Shadow -->
             <div class="flex gap-2">
                 <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-3 text-sm focus:outline-none">
                 <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
-            <!-- Left: Popular Now, Right: See All Product -->
+            <!-- Left: Popular Now, Right: See All Product (with Orange-Red Shadow) -->
             <div class="flex justify-between items-center pt-1">
                 <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
@@ -101,11 +112,11 @@
             </div>
         </div>
 
-        <!-- Product Grid (No changes here, just ensuring it renders) -->
+        <!-- Product Grid -->
         <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3"></div>
 
-        <!-- Moved Card (Deserve Wear Card) -->
-        <div class="card-box px-6 py-6 space-y-4 text-left mt-8 mb-4">
+        <!-- Deserve Wear Card Box (Placed right under products) -->
+        <div class="card-box px-6 py-6 space-y-4 text-left mt-8">
             <div class="footer-brand inline-flex items-baseline">
                 <span><span class="fb-d">D</span><span class="fb-eserve">eserve</span></span>
                 <span class="ml-1.5"><span class="fb-w">W</span><span class="fb-ear">ear</span></span>
@@ -126,11 +137,6 @@
             <p id="t-copy" class="text-xs text-neutral-400 pt-2">© 2026 Deserve Wear. All rights reserved.</p>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="max-w-4xl mx-auto w-full px-3 mt-4 pb-8 text-center">
-        <p id="t-copy-main" class="text-xs text-neutral-400">© 2026 Deserve Wear. All rights reserved.</p>
-    </footer>
 
     <script>
         const products = [
@@ -211,7 +217,6 @@
             document.getElementById('t-contact').innerText = d.contact;
             document.getElementById('f-fb').innerText = d.fb;
             document.getElementById('t-copy').innerText = d.copy;
-            document.getElementById('t-copy-main').innerText = d.copy;
         }
 
         function renderProducts(filterText = '') {
