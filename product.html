@@ -18,7 +18,6 @@
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
 
-    <!-- Header (Original Black Brand Name) -->
     <header class="sticky top-0 z-50 px-3 pt-3">
         <div class="card-box relative mx-auto flex max-w-4xl items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md">
             <a href="index.html" class="flex items-center gap-1.5 text-sm font-semibold text-neutral-800 bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 rounded-xl transition">
@@ -86,7 +85,6 @@
         </div>
     </main>
 
-    <!-- Footer (Left aligned text & options, Colorful Brand Name) -->
     <footer class="max-w-4xl mx-auto w-full px-3 mt-12 pb-8">
         <div class="card-box px-6 py-6 space-y-4 text-left">
             <div class="footer-brand inline-flex items-baseline">
@@ -94,9 +92,10 @@
                 <span class="ml-1.5"><span class="fb-w">W</span><span class="fb-ear">ear</span></span>
             </div>
             <div class="flex flex-col items-start gap-2 max-w-[180px] py-2">
-                <a href="index.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">All Products</a>
+                <a href="products.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">All Products</a>
                 <a href="cart.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">Cart</a>
                 <a href="orders.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">My Order</a>
+                <a href="track.html" class="w-full text-left bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-4 py-2 rounded-xl text-xs font-semibold text-neutral-800 transition shadow-sm">Track Order</a>
             </div>
             <div class="pt-2 border-t border-neutral-100">
                 <p class="text-xs font-bold tracking-widest text-amber-600 mb-3 uppercase">CONTACTS WITH US</p>
@@ -105,7 +104,7 @@
                     <a href="https://wa.me/8801877476659?text=Hello" target="_blank" class="flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium">💬 WhatsApp</a>
                 </div>
             </div>
-            <p class="text-xs text-neutral-400">© 2026 Deserve Wear.</p>
+            <p class="text-xs text-neutral-400">© 2026 Deserve Wear. All rights reserved.</p>
         </div>
     </footer>
 
@@ -140,6 +139,42 @@
             },
             { 
                 id: 4, name: "Zipper Hoodie", price: 1650, 
+                images: [
+                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
+                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
+                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
+                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg"
+                ] 
+            },
+            { 
+                id: 5, name: "Baby Soft Winter Suit", price: 850, 
+                images: [
+                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
+                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
+                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
+                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg"
+                ] 
+            },
+            { 
+                id: 6, name: "Men's Formal Polo", price: 750, 
+                images: [
+                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
+                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
+                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
+                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg"
+                ] 
+            },
+            { 
+                id: 7, name: "Women's Stylish Kurti", price: 1150, 
+                images: [
+                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
+                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
+                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
+                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg"
+                ] 
+            },
+            { 
+                id: 8, name: "Baby Cotton Romper", price: 550, 
                 images: [
                     "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
                     "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
@@ -190,7 +225,7 @@
             });
             localStorage.setItem('deserve_cart', JSON.stringify(cart));
             updateCartBadge();
-            alert('প্রোডাক্টটি কার্টে যোগ করা হয়েছে!');
+            // No alert popup shown
         }
 
         function buyNow() {
