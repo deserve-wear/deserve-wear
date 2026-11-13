@@ -16,17 +16,17 @@
         .fb-w { color: #2563eb; font-size: 2rem; margin-left: 4px; }
         .fb-ear { color: #d97706; }
 
-        /* See All Product Glowing Shadow Effect */
-        #btn-see-all {
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 5px rgba(239, 68, 68, 0.3);
-            border: 1px solid rgba(245, 158, 11, 0.7);
+        /* See All Product & Slogan Box Glowing Shadow Effect */
+        #btn-see-all, .slogan-box {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), 0 0 5px rgba(239, 68, 68, 0.25);
+            border: 1px solid rgba(245, 158, 11, 0.6);
             transition: all 0.3s ease;
         }
         #btn-see-all:hover {
-            box-shadow: 0 0 22px rgba(245, 158, 11, 0.8), 0 0 8px rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.7), 0 0 8px rgba(239, 68, 68, 0.5);
         }
 
-        /* Slider Animation */
+        /* Slow Slider Animation */
         @keyframes slideText {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
@@ -37,7 +37,7 @@
         }
         .slider-text {
             display: inline-block;
-            animation: slideText 12s linear infinite;
+            animation: slideText 25s linear infinite; /* Very smooth and slow speed */
         }
     </style>
 </head>
@@ -104,15 +104,15 @@
     <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
         <div class="mb-6 space-y-4">
             
-            <!-- Slogan Slider Box -->
-            <div class="card-box bg-gradient-to-r from-neutral-900 to-neutral-800 text-amber-400 py-3 px-4 shadow-md rounded-2xl slider-container">
-                <div class="slider-text text-xs sm:text-sm font-semibold tracking-wider">
+            <!-- Slogan Slider Box (Slim & Clean with Highlight Shadow) -->
+            <div class="bg-white text-neutral-900 py-2.5 px-4 rounded-2xl slider-container slogan-box">
+                <div class="slider-text text-xs sm:text-sm font-semibold tracking-wider text-amber-600">
                     ✧ ট্রেন্ডি ফ্যাশনে নিজেকে প্রকাশ করুন ✧ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Deserve Wear - Premium Quality Collection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 আস্থার সাথে পরিধান করুন
                 </div>
             </div>
 
             <div class="flex justify-between items-center px-1">
-                <h1 id="t-all-prod-heading" class="text-2xl font-bold">Trendy Collection</h1>
+                <h1 id="t-all-prod-heading" class="text-2xl font-bold">✨ Trendy Collection</h1>
                 <!-- Language Switcher -->
                 <div class="flex bg-neutral-200 p-1 rounded-xl text-xs font-bold">
                     <button onclick="setLang('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg bg-neutral-900 text-white transition">বাংলা</button>
@@ -125,7 +125,7 @@
                 <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
-            <!-- Left: Popular Now, Right: See All Product (with glowing shadow) -->
+            <!-- Left: Popular Now, Right: See All Product -->
             <div class="flex justify-between items-center pt-1">
                 <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
@@ -183,7 +183,7 @@
                 pass: "পাসওয়ার্ড",
                 signin: "Sign In / Sign Up",
                 or: "অথবা",
-                allHeading: "Trendy Collection",
+                allHeading: "✨ Trendy Collection",
                 searchPlace: "প্রোডাক্ট খুঁজুন...",
                 searchBtn: "খুঁজুন",
                 allProdFooter: "All Products",
@@ -202,7 +202,7 @@
                 pass: "Password",
                 signin: "Sign In / Sign Up",
                 or: "OR",
-                allHeading: "Trendy Collection",
+                allHeading: "✨ Trendy Collection",
                 searchPlace: "Search product...",
                 searchBtn: "Search",
                 allProdFooter: "All Products",
