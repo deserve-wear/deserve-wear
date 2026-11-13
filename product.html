@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Product Details - Deserve Wear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 antialiased flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-black tracking-wider uppercase text-neutral-900">
+                Deserve<span class="text-amber-600">.Wear</span>
+            </a>
+            <a href="index.html" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition">← হোমপেজে ফিরে যান</a>
+        </div>
+    </header>
+
+    <!-- Product Details Section -->
+    <main class="max-w-5xl mx-auto px-4 py-12 flex-1">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm">
+            
+            <!-- Product Image -->
+            <div class="relative aspect-[4/5] bg-neutral-100 rounded-2xl overflow-hidden">
+                <img id="prod-img" src="" alt="Product Image" class="object-cover w-full h-full">
+            </div>
+
+            <!-- Product Info & Actions -->
+            <div class="flex flex-col justify-between h-full">
+                <div>
+                    <h1 id="prod-name" class="text-2xl md:text-3xl font-bold text-neutral-900"></h1>
+                    <p id="prod-price" class="mt-3 text-xl font-bold text-neutral-900"></p>
+                    
+                    <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+                        প্রিমিয়াম কটন ফ্যাব্রিক দিয়ে তৈরি অত্যন্ত আরামদায়ক ও ট্রেন্ডি পোশাক। ক্যাজুয়াল বা রেগুলার ব্যবহারের জন্য একদম পারফেক্ট। কালার গ্যারান্টিযুক্ত।
+                    </p>
+
+                    <!-- Size Selection -->
+                    <div class="mt-6">
+                        <label class="block text-sm font-semibold text-neutral-700 mb-2">সাইজ সিলেক্ট করুন:</label>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition active">M</button>
+                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">L</button>
+                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">XL</button>
+                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">XXL</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Order Button -->
+                <div class="mt-8">
+                    <a id="whatsapp-btn" href="#" target="_blank" class="block w-full text-center bg-neutral-900 text-white font-medium py-3.5 rounded-xl hover:bg-neutral-800 transition shadow-md">
+                        সরাসরি WhatsApp-এ অর্ডার করুন
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-neutral-200 mt-16 py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-neutral-500">
+            <p>© 2026 Deserve Wear. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript to Load Dynamic Product Data -->
+    <script>
+        // Database of products
+        const products = {
+            "1": { name: "Classic Cotton Tee", price: "৳৪৫০", img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
+            "2": { name: "Oversized Drop Shoulder Tee", price: "৳৬৫০", img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
+            "3": { name: "Premium Fleece Hoodie", price: "৳১,৪৫০", img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
+            "4": { name: "Zipper Hoodie", price: "৳১,৬৫০", img: "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg" }
+        };
+
+        // Get product ID from URL (e.g. product.html?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || "1";
+
+        let selectedSize = "M"; // Default size
+
+        function selectSize(btn) {
+            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
+            btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
+            selectedSize = btn.innerText;
+            updateWhatsAppLink();
+        }
+
+        function updateWhatsAppLink() {
+            const product = products[productId];
+            const message = `Hello, I want to order this product:%0A*${product.name}*%0APrice: ${product.price}%0ASize: ${selectedSize}%0A%0APlease confirm my order!`;
+            document.getElementById('whatsapp-btn').href = `https://wa.me/8801700000000?text=${message}`;
+        }
+
+        // Load Product Data into HTML
+        if (products[productId]) {
+            const p = products[productId];
+            document.getElementById('page-title').innerText = p.name + " - Deserve Wear";
+            document.getElementById('prod-name').innerText = p.name;
+            document.getElementById('prod-price').innerText = p.price;
+            document.getElementById('prod-img').src = p.img;
+            updateWhatsAppLink();
+        }
+    </script>
+</body>
+</html>
