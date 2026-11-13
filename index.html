@@ -10,7 +10,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card-box { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
         .search-shadow { box-shadow: 0 0 15px rgba(0, 0, 0, 0.08), 0 2px 5px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.08); }
-        .brand-gradient { background: linear-gradient(135deg, #f59e0b, #d97706, #b45309); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-gradient { background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
@@ -36,8 +36,6 @@
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
-        
-        <!-- Search & Filter Section -->
         <div class="mb-6 space-y-4">
             <h1 class="text-2xl font-bold px-1">সব প্রোডাক্ট</h1>
             
@@ -46,18 +44,16 @@
                 <button onclick="filterProducts()" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
-            <!-- Gender Highlight Options -->
+            <!-- Gender Highlight Options (ALL instead of সকল) -->
             <div class="flex gap-2 pt-1">
-                <button onclick="setCategory('all')" id="cat-all" class="category-btn bg-neutral-900 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-sm transition">সকল</button>
-                <button onclick="setCategory('men')" id="cat-men" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-4 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Men's 👕</button>
-                <button onclick="setCategory('women')" id="cat-women" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-4 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Women's 👗</button>
+                <button onclick="setCategory('all')" id="cat-all" class="category-btn bg-neutral-900 text-white px-5 py-2 rounded-full text-xs font-semibold shadow-sm transition">ALL</button>
+                <button onclick="setCategory('men')" id="cat-men" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-5 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Men's 👕</button>
+                <button onclick="setCategory('women')" id="cat-women" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-5 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Women's 👗</button>
             </div>
         </div>
 
         <!-- Product Grid -->
-        <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-            <!-- Dynamic Products -->
-        </div>
+        <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3"></div>
     </main>
 
     <!-- Footer -->
@@ -65,24 +61,23 @@
         <div class="card-box px-6 py-6 text-center space-y-4">
             <h2 class="text-2xl font-black italic font-serif brand-gradient">Deserve Wear</h2>
             
-            <!-- Clickable Options -->
-            <div class="flex justify-center gap-6 text-sm font-semibold text-neutral-700 border-y border-neutral-100 py-3">
-                <a href="index.html" class="hover:text-amber-600 transition">All Products</a>
-                <a href="cart.html" class="hover:text-amber-600 transition">Cart</a>
-                <a href="cart.html?tab=orders" class="hover:text-amber-600 transition">My Order</a>
+            <!-- Clickable Options (Stacked vertically in boxes as requested) -->
+            <div class="flex flex-col gap-2 max-w-xs mx-auto py-2">
+                <a href="index.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">All Products</a>
+                <a href="cart.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">Cart</a>
+                <a href="orders.html" class="bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 transition shadow-sm">My Order</a>
             </div>
 
-            <!-- Contact & Social Links -->
-            <div class="flex justify-center items-center gap-4 pt-2">
-                <a href="https://www.facebook.com/profile.php?id=61596776030542" target="_blank" class="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-blue-700 transition">
-                    🌐 ফেসবুক পেজ
-                </a>
-                <a href="https://wa.me/8801877476659?text=Hello%20Deserve%20Wear" target="_blank" class="flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-emerald-700 transition">
-                    💬 WhatsApp (+8801877476659)
-                </a>
+            <!-- Contact Section -->
+            <div class="pt-2 border-t border-neutral-100">
+                <p class="text-xs font-bold tracking-widest text-amber-600 mb-3 uppercase">CONTACTS WITH US</p>
+                <div class="flex justify-center items-center gap-4">
+                    <a href="https://www.facebook.com/profile.php?id=61596776030542" target="_blank" class="flex items-center gap-1.5 bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-blue-700 transition">🌐 ফেসবুক পেজ</a>
+                    <a href="https://wa.me/8801877476659?text=Hello%20Deserve%20Wear" target="_blank" class="flex items-center gap-1.5 bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-emerald-700 transition">💬 WhatsApp</a>
+                </div>
             </div>
             
-            <p class="text-xs text-neutral-400">© 2026 Deserve Wear. All rights reserved.</p>
+            <p class="text-xs text-neutral-400 pt-2">© 2026 Deserve Wear. All rights reserved.</p>
         </div>
     </footer>
 
@@ -116,7 +111,7 @@
                     <a href="product.html?id=${p.id}" class="card-box overflow-hidden block group transition transform active:scale-95 bg-white">
                         <div class="relative aspect-[4/5] bg-neutral-100 overflow-hidden">
                             <img src="${p.img}" class="object-cover w-full h-full group-hover:scale-105 transition duration-300">
-                            ${p.hotSale ? '<span class="absolute top-2 left-2 bg-gradient-to-r from-red-600 to-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">🔥 Hot Sale</span>' : (p.oldPrice ? '<span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow">সেল</span>' : '')}
+                            ${p.hotSale ? '<span class="absolute top-2 left-2 bg-gradient-to-r from-red-600 to-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">🔥 Hot Sale</span>' : ''}
                         </div>
                         <div class="p-3">
                             <h3 class="font-medium text-xs sm:text-sm line-clamp-1">${p.name}</h3>
@@ -137,7 +132,6 @@
             const activeBtn = document.getElementById(`cat-${cat}`);
             activeBtn.classList.remove('bg-white', 'text-neutral-700', 'border', 'border-neutral-200');
             activeBtn.classList.add('bg-neutral-900', 'text-white', 'shadow-sm');
-            
             renderProducts(document.getElementById('search-input').value);
         }
 
