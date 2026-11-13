@@ -15,6 +15,16 @@
         .fb-eserve { color: #4b5563; }
         .fb-w { color: #2563eb; font-size: 2rem; margin-left: 4px; }
         .fb-ear { color: #d97706; }
+
+        /* See All Product Glowing Shadow Effect */
+        #btn-see-all {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5), 0 0 5px rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(245, 158, 11, 0.7);
+            transition: all 0.3s ease;
+        }
+        #btn-see-all:hover {
+            box-shadow: 0 0 22px rgba(245, 158, 11, 0.8), 0 0 8px rgba(239, 68, 68, 0.5);
+        }
     </style>
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
@@ -93,11 +103,11 @@
                 <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
-            <!-- Left: Popular Now, Right: See All Product (with space in middle) -->
+            <!-- Left: Popular Now, Right: See All Product (with glowing shadow) -->
             <div class="flex justify-between items-center pt-1">
                 <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
-                <a href="products.html" id="btn-see-all" onclick="switchHomeTab('all')" class="bg-white text-neutral-800 border border-neutral-200 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-neutral-100 transition shadow-sm">See All Product ➔</a>
+                <a href="products.html" id="btn-see-all" class="bg-white text-neutral-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-neutral-50 transition">See All Product ➔</a>
             </div>
         </div>
 
@@ -213,7 +223,6 @@
             const grid = document.getElementById('product-grid');
             grid.innerHTML = '';
 
-            // Homepage displays exactly 8 popular products
             let filtered = products.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase())).slice(0, 8);
 
             if(filtered.length === 0) {
@@ -252,7 +261,6 @@
         }
 
         function alertAction(msg) {
-            // Replaced alert popup with silent action or console log to avoid unwanted browser popups
             console.log(msg);
         }
 
