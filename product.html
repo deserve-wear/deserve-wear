@@ -6,107 +6,155 @@
     <title id="page-title">Product Details - Deserve Wear</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Inter', sans-serif; } </style>
+    <style> 
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; } 
+        .card-box { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
+        .brand-gradient { background: linear-gradient(135deg, #f59e0b, #d97706, #b45309); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
 </head>
-<body class="bg-neutral-50 text-neutral-900 antialiased flex flex-col min-h-screen">
+<body class="text-neutral-900 antialiased flex flex-col min-h-screen">
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-black tracking-wider uppercase text-neutral-900">
-                Deserve<span class="text-amber-600">.Wear</span>
+    <header class="sticky top-0 z-50 px-3 pt-3">
+        <div class="card-box relative mx-auto flex max-w-4xl items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md">
+            <a href="index.html" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition flex items-center gap-1">
+                ← হোমপেজে ফিরে যান
             </a>
-            <a href="index.html" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition">← হোমপেজে ফিরে যান</a>
+            <a href="cart.html" class="flex items-center gap-2 bg-neutral-100 hover:bg-neutral-200 px-3.5 py-2 rounded-full text-sm font-medium transition">
+                <span>কার্ট</span>
+                <span id="cart-count" class="bg-amber-600 text-white text-xs px-1.5 py-0.5 rounded-full">0</span>
+            </a>
         </div>
     </header>
 
-    <!-- Product Details Section -->
-    <main class="max-w-5xl mx-auto px-4 py-12 flex-1">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white p-6 md:p-8 rounded-3xl border border-neutral-200 shadow-sm">
+    <!-- Details Main -->
+    <main class="max-w-4xl mx-auto px-3 py-8 flex-1 w-full">
+        <div class="card-box p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white">
             
-            <!-- Product Image -->
             <div class="relative aspect-[4/5] bg-neutral-100 rounded-2xl overflow-hidden">
-                <img id="prod-img" src="" alt="Product Image" class="object-cover w-full h-full">
+                <img id="prod-img" src="" class="w-full h-full object-cover">
             </div>
 
-            <!-- Product Info & Actions -->
-            <div class="flex flex-col justify-between h-full">
+            <div class="flex flex-col justify-between h-full space-y-4">
                 <div>
-                    <h1 id="prod-name" class="text-2xl md:text-3xl font-bold text-neutral-900"></h1>
-                    <p id="prod-price" class="mt-3 text-xl font-bold text-neutral-900"></p>
+                    <h1 id="prod-name" class="text-2xl font-bold text-neutral-900"></h1>
+                    <p id="prod-price" class="mt-2 text-xl font-bold text-amber-600"></p>
                     
-                    <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-                        প্রিমিয়াম কটন ফ্যাব্রিক দিয়ে তৈরি অত্যন্ত আরামদায়ক ও ট্রেন্ডি পোশাক। ক্যাজুয়াল বা রেগুলার ব্যবহারের জন্য একদম পারফেক্ট। কালার গ্যারান্টিযুক্ত।
+                    <p class="mt-3 text-sm text-neutral-600 leading-relaxed">
+                        প্রিমিয়াম কটন ফ্যাব্রিক দিয়ে তৈরি অত্যন্ত আরামদায়ক ও ট্রেন্ডি পোশাক। কালার ও কোয়ালিটি ১০০% গ্যারান্টিযুক্ত।
                     </p>
 
-                    <!-- Size Selection -->
-                    <div class="mt-6">
-                        <label class="block text-sm font-semibold text-neutral-700 mb-2">সাইজ সিলেক্ট করুন:</label>
-                        <div class="flex gap-3">
-                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition active">M</button>
-                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">L</button>
-                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">XL</button>
-                            <button type="button" onclick="selectSize(this)" class="size-btn px-4 py-2 border border-neutral-300 rounded-xl text-sm font-medium hover:border-neutral-900 transition">XXL</button>
+                    <!-- Color Box -->
+                    <div class="mt-4">
+                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং: <span id="selected-color-text" class="text-neutral-900">Black</span></label>
+                        <div class="flex gap-2">
+                            <button onclick="selectColor('Black', this)" class="color-btn px-4 py-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-medium">Black</button>
+                            <button onclick="selectColor('White', this)" class="color-btn px-4 py-2 rounded-xl border border-neutral-200 text-xs font-medium">White</button>
+                        </div>
+                    </div>
+
+                    <!-- Size Box -->
+                    <div class="mt-4">
+                        <label class="block text-xs font-semibold text-neutral-500 mb-2">সাইজ:</label>
+                        <div class="flex gap-2">
+                            <button onclick="selectSize('S', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">S</button>
+                            <button onclick="selectSize('M', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-medium">M</button>
+                            <button onclick="selectSize('L', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">L</button>
+                            <button onclick="selectSize('XL', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">XL</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- WhatsApp Order Button -->
-                <div class="mt-8">
-                    <a id="whatsapp-btn" href="#" target="_blank" class="block w-full text-center bg-neutral-900 text-white font-medium py-3.5 rounded-xl hover:bg-neutral-800 transition shadow-md">
-                        সরাসরি WhatsApp-এ অর্ডার করুন
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 gap-3 pt-4">
+                    <button onclick="addToCart()" class="bg-neutral-900 text-white py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition shadow-sm">কার্টে যোগ করুন</button>
+                    <button onclick="buyNow()" class="bg-amber-600 text-white py-3 rounded-2xl font-medium text-sm hover:bg-amber-700 transition shadow-sm">এখনই কিনুন</button>
+                </div>
+
+                <!-- Chat Box Option -->
+                <div class="border-t pt-4 text-center">
+                    <a href="javascript:void(0)" onclick="openChat()" class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-emerald-100 transition w-full">
+                        💬 চ্যাট করুন
+                        <span class="block text-[11px] text-emerald-600 font-normal mt-0.5">প্রোডাক্ট সম্পর্কে জানতে মেসেজ করুন</span>
                     </a>
                 </div>
             </div>
-
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-neutral-200 mt-16 py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-neutral-500">
-            <p>© 2026 Deserve Wear. All rights reserved.</p>
+    <footer class="max-w-4xl mx-auto w-full px-3 mt-12 pb-8">
+        <div class="card-box px-6 py-6 text-center space-y-4">
+            <h2 class="text-2xl font-black italic font-serif brand-gradient">Deserve Wear</h2>
+            <div class="flex justify-center gap-6 text-sm font-semibold text-neutral-700 border-y border-neutral-100 py-3">
+                <a href="index.html" class="hover:text-amber-600 transition">All Products</a>
+                <a href="cart.html" class="hover:text-amber-600 transition">Cart</a>
+                <a href="cart.html?tab=orders" class="hover:text-amber-600 transition">My Order</a>
+            </div>
+            <div class="flex justify-center items-center gap-4 pt-2">
+                <a href="https://www.facebook.com/profile.php?id=61596776030542" target="_blank" class="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium">🌐 ফেসবুক পেজ</a>
+                <a href="https://wa.me/8801877476659?text=Hello" target="_blank" class="flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium">💬 WhatsApp</a>
+            </div>
+            <p class="text-xs text-neutral-400">© 2026 Deserve Wear.</p>
         </div>
     </footer>
 
-    <!-- JavaScript to Load Dynamic Product Data -->
     <script>
-        // Database of products
-        const products = {
-            "1": { name: "Classic Cotton Tee", price: "৳৪৫০", img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
-            "2": { name: "Oversized Drop Shoulder Tee", price: "৳৬৫০", img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
-            "3": { name: "Premium Fleece Hoodie", price: "৳১,৪৫০", img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
-            "4": { name: "Zipper Hoodie", price: "৳১,৬৫০", img: "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg" }
-        };
+        const products = [
+            { id: 1, name: "Classic Cotton Tee", price: 450, img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
+            { id: 2, name: "Oversized Drop Shoulder Tee", price: 650, img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
+            { id: 3, name: "Premium Fleece Hoodie", price: 1450, img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
+            { id: 4, name: "Zipper Hoodie", price: 1650, img: "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg" }
+        ];
 
-        // Get product ID from URL (e.g. product.html?id=1)
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id') || "1";
+        const currentProduct = products.find(p => p.id == productId) || products[0];
 
-        let selectedSize = "M"; // Default size
+        let selectedSize = 'M';
+        let selectedColor = 'Black';
 
-        function selectSize(btn) {
+        document.getElementById('page-title').innerText = currentProduct.name + " - Deserve Wear";
+        document.getElementById('prod-name').innerText = currentProduct.name;
+        document.getElementById('prod-price').innerText = `৳${currentProduct.price}`;
+        document.getElementById('prod-img').src = currentProduct.img;
+
+        function selectSize(size, btn) {
+            selectedSize = size;
             document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
-            selectedSize = btn.innerText;
-            updateWhatsAppLink();
         }
 
-        function updateWhatsAppLink() {
-            const product = products[productId];
-            const message = `Hello, I want to order this product:%0A*${product.name}*%0APrice: ${product.price}%0ASize: ${selectedSize}%0A%0APlease confirm my order!`;
-            document.getElementById('whatsapp-btn').href = `https://wa.me/8801700000000?text=${message}`;
+        function selectColor(color, btn) {
+            selectedColor = color;
+            document.getElementById('selected-color-text').innerText = color;
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
+            btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
         }
 
-        // Load Product Data into HTML
-        if (products[productId]) {
-            const p = products[productId];
-            document.getElementById('page-title').innerText = p.name + " - Deserve Wear";
-            document.getElementById('prod-name').innerText = p.name;
-            document.getElementById('prod-price').innerText = p.price;
-            document.getElementById('prod-img').src = p.img;
-            updateWhatsAppLink();
+        function addToCart() {
+            let cart = JSON.parse(localStorage.getItem('deserve_cart')) || [];
+            cart.push({ ...currentProduct, size: selectedSize, color: selectedColor, qty: 1 });
+            localStorage.setItem('deserve_cart', JSON.stringify(cart));
+            updateCartBadge();
+            alert('প্রোডাক্টটি কার্টে যোগ করা হয়েছে!');
         }
+
+        function buyNow() {
+            addToCart();
+            window.location.href = 'cart.html';
+        }
+
+        function openChat() {
+            const msg = `হ্যালো, আমি "${currentProduct.name}" (${selectedColor}, সাইজ: ${selectedSize}) প্রোডাক্টটি সম্পর্কে জানতে চাই।`;
+            window.open(`https://wa.me/8801877476659?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('deserve_cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+        updateCartBadge();
     </script>
 </body>
 </html>
