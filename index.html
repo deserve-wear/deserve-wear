@@ -25,6 +25,20 @@
         #btn-see-all:hover {
             box-shadow: 0 0 22px rgba(245, 158, 11, 0.8), 0 0 8px rgba(239, 68, 68, 0.5);
         }
+
+        /* Slider Animation */
+        @keyframes slideText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .slider-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .slider-text {
+            display: inline-block;
+            animation: slideText 12s linear infinite;
+        }
     </style>
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
@@ -89,8 +103,16 @@
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full">
         <div class="mb-6 space-y-4">
+            
+            <!-- Slogan Slider Box -->
+            <div class="card-box bg-gradient-to-r from-neutral-900 to-neutral-800 text-amber-400 py-3 px-4 shadow-md rounded-2xl slider-container">
+                <div class="slider-text text-xs sm:text-sm font-semibold tracking-wider">
+                    ✧ ট্রেন্ডি ফ্যাশনে নিজেকে প্রকাশ করুন ✧ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Deserve Wear - Premium Quality Collection &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 আস্থার সাথে পরিধান করুন
+                </div>
+            </div>
+
             <div class="flex justify-between items-center px-1">
-                <h1 id="t-all-prod-heading" class="text-2xl font-bold">সব প্রোডাক্ট</h1>
+                <h1 id="t-all-prod-heading" class="text-2xl font-bold">Trendy Collection</h1>
                 <!-- Language Switcher -->
                 <div class="flex bg-neutral-200 p-1 rounded-xl text-xs font-bold">
                     <button onclick="setLang('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg bg-neutral-900 text-white transition">বাংলা</button>
@@ -161,7 +183,7 @@
                 pass: "পাসওয়ার্ড",
                 signin: "Sign In / Sign Up",
                 or: "অথবা",
-                allHeading: "সব প্রোডাক্ট (Popular Now)",
+                allHeading: "Trendy Collection",
                 searchPlace: "প্রোডাক্ট খুঁজুন...",
                 searchBtn: "খুঁজুন",
                 allProdFooter: "All Products",
@@ -180,7 +202,7 @@
                 pass: "Password",
                 signin: "Sign In / Sign Up",
                 or: "OR",
-                allHeading: "All Products (Popular Now)",
+                allHeading: "Trendy Collection",
                 searchPlace: "Search product...",
                 searchBtn: "Search",
                 allProdFooter: "All Products",
