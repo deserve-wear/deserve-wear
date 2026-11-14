@@ -209,7 +209,6 @@
             const grid = document.getElementById('product-grid');
             grid.innerHTML = '';
 
-            // products.js ফাইল না থাকলে বা ফাঁকা থাকলে যাতে কোনো এরর না ধরে সেজন্য চেক করা হচ্ছে
             if (typeof products === 'undefined') {
                 grid.innerHTML = '<p class="col-span-full text-center py-8 text-neutral-400 text-sm">products.js ফাইল পাওয়া যায়নি বা ফাঁকা আছে!</p>';
                 return;
@@ -233,6 +232,7 @@
                         <div class="p-3">
                             <h3 class="font-medium text-xs sm:text-sm line-clamp-1">${p.name}</h3>
                             <p class="mt-1 text-xs sm:text-sm"><span class="font-bold text-neutral-900">৳${p.price}</span> ${p.oldPrice ? `<span class="text-neutral-400 line-through ml-1 text-xs">৳${p.oldPrice}</span>` : ''}</p>
+                            ${p.soldCount ? `<p class="mt-1 text-[11px] text-neutral-500 font-medium">🔥 ${p.soldCount}+ পিস বিক্রী হয়েছে</p>` : ''}
                         </div>
                     </a>
                 `;
