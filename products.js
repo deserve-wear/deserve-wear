@@ -1,6 +1,6 @@
 const products = [
   {
-    id: 1
+    id: 1,
     name: "Premium Winter Jacket",
     price: 650,
     oldPrice: 850,
