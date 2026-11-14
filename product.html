@@ -51,11 +51,23 @@
             <div class="flex flex-col justify-between h-full space-y-4">
                 <div>
                     <h1 id="prod-name" class="text-2xl font-bold text-neutral-900"></h1>
-                    <p id="prod-price" class="mt-2 text-xl font-bold text-amber-600"></p>
                     
-                    <!-- Color Options (Dynamic based on product) -->
+                    <!-- Price and Sold Count Row -->
+                    <div class="mt-2 flex items-center justify-between">
+                        <p id="prod-price" class="text-xl font-bold text-amber-600"></p>
+                        <p id="prod-sold" class="text-xs sm:text-sm text-neutral-500 font-medium"></p>
+                    </div>
+                    
+                    <!-- Live Selected Summary -->
+                    <div class="mt-3 flex items-center gap-3 bg-neutral-50 px-3.5 py-2 rounded-xl border border-neutral-200 text-xs font-semibold text-neutral-700">
+                        <span>Colour: <span id="summary-color" class="text-amber-600 font-bold">-</span></span>
+                        <span class="text-neutral-300">|</span>
+                        <span>Size: <span id="summary-size" class="text-amber-600 font-bold">-</span></span>
+                    </div>
+
+                    <!-- Color Options -->
                     <div class="mt-4">
-                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (অপশন): <span id="selected-color-text" class="text-neutral-900"></span></label>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-neutral-700 mb-2">Colour Selection:</label>
                         <div class="flex gap-2 flex-wrap" id="color-options">
                             <!-- Dynamic Colors -->
                         </div>
@@ -63,12 +75,9 @@
 
                     <!-- Size Options -->
                     <div class="mt-4">
-                        <label class="block text-xs font-semibold text-neutral-500 mb-2">সাইজ:</label>
-                        <div class="flex gap-2">
-                            <button onclick="selectSize('S', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">S</button>
-                            <button onclick="selectSize('M', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-medium">M</button>
-                            <button onclick="selectSize('L', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">L</button>
-                            <button onclick="selectSize('XL', this)" class="size-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">XL</button>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-neutral-700 mb-2">Size Selection:</label>
+                        <div class="flex gap-2 flex-wrap" id="size-options">
+                            <!-- Dynamic Sizes -->
                         </div>
                     </div>
                 </div>
@@ -86,7 +95,7 @@
                     </a>
 
                     <!-- Product Specific Full Details Box -->
-                    <div id="prod-description" class="p-4 bg-neutral-50 border border-neutral-200 rounded-2xl text-xs sm:text-sm text-neutral-700 leading-relaxed">
+                    <div id="prod-description" class="p-4 bg-neutral-50 border border-neutral-200 rounded-2xl text-xs sm:text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
                         <!-- Dynamic Description -->
                     </div>
                 </div>
@@ -124,7 +133,8 @@
         const productId = urlParams.get('id') || "1";
         const currentProduct = (typeof products !== 'undefined') ? (products.find(p => p.id == productId) || products[0]) : { name: "Product", price: 0, images: [], colors: ["Black"], description: "" };
 
-        let selectedSize = 'M';
+        const availableSizes = currentProduct.sizes || ['M', 'L', 'XL'];
+        let selectedSize = availableSizes[0];
         let selectedColor = currentProduct.colors && currentProduct.colors.length > 0 ? currentProduct.colors[0] : 'Black';
         let activeImageIndex = 0;
 
@@ -133,10 +143,19 @@
         document.getElementById('prod-price').innerText = `৳${currentProduct.price}`;
         document.getElementById('prod-description').innerText = currentProduct.description || "এই প্রডাক্ট সম্পর্কে বিস্তারিত কোনো তথ্য দেওয়া হয়নি।";
 
+        // Sold count rendering (matches homepage format)
+        if(currentProduct.soldCount) {
+            document.getElementById('prod-sold').innerText = `🔥 ${currentProduct.soldCount}+ পিস বিক্রি হয়েছে`;
+        }
+
+        function updateSummary() {
+            document.getElementById('summary-color').innerText = selectedColor;
+            document.getElementById('summary-size').innerText = selectedSize;
+        }
+
         if(currentProduct.images && currentProduct.images.length > 0) {
             document.getElementById('prod-img').src = currentProduct.images[0];
             
-            // Render Thumbnails for Image Slider (Up to 4 images)
             const thumbContainer = document.getElementById('thumbnail-container');
             currentProduct.images.forEach((imgUrl, index) => {
                 thumbContainer.innerHTML += `
@@ -150,7 +169,6 @@
         // Render Dynamic Color Options
         const colorContainer = document.getElementById('color-options');
         if(currentProduct.colors && currentProduct.colors.length > 0) {
-            document.getElementById('selected-color-text').innerText = currentProduct.colors[0];
             currentProduct.colors.forEach((col, index) => {
                 let isFirst = index === 0;
                 colorContainer.innerHTML += `
@@ -159,36 +177,48 @@
             });
         }
 
-        function changeMainImage(index, btn) {
-            activeImageIndex = index;
-            document.getElementById('prod-img').src = currentProduct.images[index];
-            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('border-neutral-900'));
-            b.classList.add('border-neutral-900'); // Note: handled via btn passed
-        }
+        // Render Dynamic Size Options
+        const sizeContainer = document.getElementById('size-options');
+        availableSizes.forEach((sz, index) => {
+            let isFirst = index === 0;
+            sizeContainer.innerHTML += `
+                <button onclick="selectSize('${sz}', this)" class="size-btn px-3 py-2 rounded-xl border ${isFirst ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-200 text-neutral-700'} text-xs font-medium transition">${sz}</button>
+            `;
+        });
 
-        // Fix for thumbnail border toggle
+        updateSummary();
+
         window.changeMainImage = function(index, btn) {
             activeImageIndex = index;
             document.getElementById('prod-img').src = currentProduct.images[index];
-            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('border-neutral-900', 'border-2'));
-            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.add('border', 'border-transparent'));
+            document.querySelectorAll('.thumb-btn').forEach(b => {
+                b.classList.remove('border-neutral-900', 'border-2');
+                b.classList.add('border', 'border-transparent');
+            });
             btn.classList.remove('border-transparent');
             btn.classList.add('border-2', 'border-neutral-900');
         };
 
         function selectSize(size, btn) {
             selectedSize = size;
-            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
+            document.querySelectorAll('.size-btn').forEach(b => {
+                b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white');
+                b.classList.add('border-neutral-200', 'text-neutral-700');
+            });
+            btn.classList.remove('border-neutral-200', 'text-neutral-700');
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
+            updateSummary();
         }
 
         function selectColor(color, btn) {
             selectedColor = color;
-            document.getElementById('selected-color-text').innerText = color;
-            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
-            document.querySelectorAll('.color-btn').forEach(b => b.classList.add('border-neutral-200', 'text-neutral-700'));
+            document.querySelectorAll('.color-btn').forEach(b => {
+                b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white');
+                b.classList.add('border-neutral-200', 'text-neutral-700');
+            });
             btn.classList.remove('border-neutral-200', 'text-neutral-700');
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
+            updateSummary();
         }
 
         function addToCart() {
@@ -213,7 +243,7 @@
         }
 
         function openChat() {
-            const msg = `হ্যালো, আমি "${currentProduct.name}" (রং: ${selectedColor}, সাইজ: ${selectedSize}) প্রোডাক্টটি সম্পর্কে জানতে চাই।`;
+            const msg = `হ্যালো, আমি "${currentProduct.name}" (Colour: ${selectedColor}, Size: ${selectedSize}) প্রোডাক্টটি সম্পর্কে জানতে চাই।`;
             window.open(`https://wa.me/8801877476659?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
