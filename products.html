@@ -18,6 +18,7 @@
 </head>
 <body class="text-neutral-900 antialiased flex flex-col min-h-screen">
 
+    <!-- Sticky Header -->
     <header class="sticky top-0 z-50 px-3 pt-3">
         <div class="card-box relative mx-auto flex max-w-4xl items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md">
             <a href="index.html" class="flex items-center gap-1.5 text-sm font-semibold text-neutral-800 bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 rounded-xl transition">
@@ -34,24 +35,41 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full space-y-6">
-        <div class="flex justify-between items-center px-1">
-            <h1 class="text-2xl font-bold">সমস্ত প্রোডাক্ট</h1>
+        
+        <!-- Header with Title & Search Icon -->
+        <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center px-1">
+                <h1 class="text-2xl font-bold text-neutral-900">সমস্ত প্রডাক্ট</h1>
+                
+                <!-- Search Icon Button -->
+                <button onclick="toggleSearchBox()" class="p-2.5 bg-white card-box hover:bg-neutral-50 transition flex items-center justify-center text-neutral-800 shadow-sm">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                </button>
+            </div>
+
+            <!-- Hidden/Toggleable Search Bar -->
+            <div id="search-container" class="hidden transition-all duration-300">
+                <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="w-full bg-white card-box px-4 py-3 text-sm focus:outline-none border border-amber-500/50 shadow-sm">
+            </div>
+
+            <!-- Category Filter Buttons (Default Selected: Fashion) -->
+            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterCategory('all', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">All</button>
+                <button onclick="filterCategory('fashion', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-neutral-900 text-white transition whitespace-nowrap">👕 Fashion</button>
+                <button onclick="filterCategory('cosmetics', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">💄 Cosmetics</button>
+                <button onclick="filterCategory('men', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Men's 👕</button>
+                <button onclick="filterCategory('women', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Women's 👗</button>
+                <button onclick="filterCategory('baby', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Baby 🍼</button>
+            </div>
         </div>
 
-        <!-- Filter Buttons: Men's, Women's, Baby -->
-        <div class="flex gap-2">
-            <button onclick="setCategory('all')" id="cat-all" class="category-btn bg-neutral-900 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-sm transition">ALL</button>
-            <button onclick="setCategory('men')" id="cat-men" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-4 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Men's 👕</button>
-            <button onclick="setCategory('women')" id="cat-women" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-4 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Women's 👗</button>
-            <button onclick="setCategory('baby')" id="cat-baby" class="category-btn bg-white text-neutral-700 border border-neutral-200 px-4 py-2 rounded-full text-xs font-semibold hover:bg-neutral-100 transition">Baby 🍼</button>
-        </div>
-
+        <!-- Product Grid -->
         <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3"></div>
-    </main>
 
-    <footer class="max-w-4xl mx-auto w-full px-3 mt-12 pb-8">
-        <div class="card-box px-6 py-6 space-y-4 text-left">
+        <!-- Footer Card Box -->
+        <div class="card-box px-6 py-6 space-y-4 text-left mt-8">
             <div class="footer-brand inline-flex items-baseline">
                 <span><span class="fb-d">D</span><span class="fb-eserve">eserve</span></span>
                 <span class="ml-1.5"><span class="fb-w">W</span><span class="fb-ear">ear</span></span>
@@ -71,38 +89,55 @@
             </div>
             <p class="text-xs text-neutral-400">© 2026 Deserve Wear. All rights reserved.</p>
         </div>
-    </footer>
+    </main>
+
+    <!-- Connect shared products database -->
+    <script src="products.js"></script>
 
     <script>
-        const products = [
-            { id: 1, name: "Classic Cotton Tee", price: 450, oldPrice: 550, category: "men", hotSale: true, img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
-            { id: 2, name: "Oversized Drop Shoulder Tee", price: 650, oldPrice: null, category: "men", hotSale: false, img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
-            { id: 3, name: "Premium Fleece Hoodie", price: 1450, oldPrice: 1750, category: "women", hotSale: true, img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
-            { id: 4, name: "Zipper Hoodie", price: 1650, oldPrice: 1800, category: "women", hotSale: false, img: "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg" },
-            { id: 5, name: "Baby Soft Winter Suit", price: 850, oldPrice: 1000, category: "baby", hotSale: true, img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
-            { id: 6, name: "Men's Formal Polo", price: 750, oldPrice: 900, category: "men", hotSale: false, img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
-            { id: 7, name: "Women's Stylish Kurti", price: 1150, oldPrice: 1400, category: "women", hotSale: false, img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
-            { id: 8, name: "Alamin Priya", price: 999, oldPrice: 1250, category: "women", hotSale: true, img: "https://i.postimg.cc/T3n2jjVY/3e14d2fb-5e2d-40ef-a68f-c476032fa3ac-1-all-45-removebg-preview.png" }
-        ];
+        let currentCategory = 'fashion'; // ডিফল্টভাবে Fashion সিলেクト করা থাকবে
 
-        let currentCategory = 'all';
+        function toggleSearchBox() {
+            const searchContainer = document.getElementById('search-container');
+            searchContainer.classList.toggle('hidden');
+            if(!searchContainer.classList.contains('hidden')) {
+                document.getElementById('search-input').focus();
+            }
+        }
 
-        function renderAllProducts() {
+        function filterCategory(category, btn) {
+            currentCategory = category;
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-neutral-950', 'text-white');
+                b.classList.add('border', 'border-neutral-200', 'bg-white', 'text-neutral-700');
+            });
+            btn.classList.remove('border', 'border-neutral-200', 'bg-white', 'text-neutral-700');
+            btn.classList.add('bg-neutral-900', 'text-white');
+            renderProducts();
+        }
+
+        function renderProducts() {
             const grid = document.getElementById('product-grid');
+            const searchText = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
             grid.innerHTML = '';
 
-            let filtered = products.filter(p => currentCategory === 'all' || p.category === currentCategory);
+            let filtered = products.filter(p => {
+                let matchesCategory = currentCategory === 'all' || (p.category && p.category.toLowerCase() === currentCategory);
+                let matchesSearch = p.name.toLowerCase().includes(searchText);
+                return matchesCategory && matchesSearch;
+            });
 
             if(filtered.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center py-8 text-neutral-400 text-sm">কোনো প্রোডাক্ট পাওয়া যায়নি</p>';
+                grid.innerHTML = '<p class="col-span-full text-center py-12 text-neutral-400 text-sm">কোনো প্রডাক্ট পাওয়া যায়নি</p>';
                 return;
             }
 
             filtered.forEach(p => {
+                let displayImg = Array.isArray(p.images) ? p.images[0] : (p.img || '');
                 grid.innerHTML += `
                     <a href="product.html?id=${p.id}" class="card-box overflow-hidden block group transition transform active:scale-95 bg-white">
                         <div class="relative aspect-[4/5] bg-neutral-100 overflow-hidden">
-                            <img src="${p.img}" class="object-cover w-full h-full group-hover:scale-105 transition duration-300">
+                            <img src="${displayImg}" class="object-cover w-full h-full group-hover:scale-105 transition duration-300">
                             ${p.hotSale ? '<span class="absolute top-2 left-2 bg-gradient-to-r from-red-600 to-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">🔥 Hot Sale</span>' : ''}
                         </div>
                         <div class="p-3">
@@ -115,16 +150,8 @@
             updateCartBadge();
         }
 
-        function setCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.category-btn').forEach(b => {
-                b.classList.remove('bg-neutral-900', 'text-white', 'shadow-sm');
-                b.classList.add('bg-white', 'text-neutral-700', 'border', 'border-neutral-200');
-            });
-            const activeBtn = document.getElementById(`cat-${cat}`);
-            activeBtn.classList.remove('bg-white', 'text-neutral-700', 'border', 'border-neutral-200');
-            activeBtn.classList.add('bg-neutral-900', 'text-white', 'shadow-sm');
-            renderAllProducts();
+        function filterProducts() {
+            renderProducts();
         }
 
         function updateCartBadge() {
@@ -132,7 +159,8 @@
             document.getElementById('cart-count').innerText = cart.length;
         }
 
-        renderAllProducts();
+        // পেজ লোড হওয়ার সাথে সাথে ডিফল্ট 'fashion' ক্যাটাগরি অনুযায়ী প্রোডাক্ট দেখাবে
+        renderProducts();
     </script>
 </body>
 </html>
