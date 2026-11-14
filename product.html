@@ -108,82 +108,15 @@
         </div>
     </footer>
 
-    <script>
-        const products = [
-            { 
-                id: 1, name: "Classic Cotton Tee", price: 450, 
-                images: [
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg"
-                ] 
-            },
-            { 
-                id: 2, name: "Oversized Drop Shoulder Tee", price: 650, 
-                images: [
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg"
-                ] 
-            },
-            { 
-                id: 3, name: "Premium Fleece Hoodie", price: 1450, 
-                images: [
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg"
-                ] 
-            },
-            { 
-                id: 4, name: "Zipper Hoodie", price: 1650, 
-                images: [
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg"
-                ] 
-            },
-            { 
-                id: 5, name: "Baby Soft Winter Suit", price: 850, 
-                images: [
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg"
-                ] 
-            },
-            { 
-                id: 6, name: "Men's Formal Polo", price: 750, 
-                images: [
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg",
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg"
-                ] 
-            },
-            { 
-                id: 7, name: "Women's Stylish Kurti", price: 1150, 
-                images: [
-                    "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg",
-                    "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg",
-                    "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg",
-                    "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg"
-                ] 
-            },
-            { 
-                id: 8, name: "Alamin Priya", price: 999, 
-                images: [
-                    "https://i.postimg.cc/T3n2jjVY/3e14d2fb-5e2d-40ef-a68f-c476032fa3ac-1-all-45-removebg-preview.png"
-                ] 
-            }
-        ];
+    <!-- products.js ফাইলটি এখানে কানেক্ট করা হলো -->
+    <script src="products.js"></script>
 
+    <script>
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id') || "1";
-        const currentProduct = products.find(p => p.id == productId) || products[0];
+        
+        // products.js ফাইল থেকে ডেটা লোড করার লজিক
+        const currentProduct = (typeof products !== 'undefined') ? (products.find(p => p.id == productId) || products[0]) : { name: "Product", price: 0, images: [] };
 
         let selectedSize = 'M';
         let selectedColor = 'Black';
@@ -192,7 +125,9 @@
         document.getElementById('page-title').innerText = currentProduct.name + " - Deserve Wear";
         document.getElementById('prod-name').innerText = currentProduct.name;
         document.getElementById('prod-price').innerText = `৳${currentProduct.price}`;
-        document.getElementById('prod-img').src = currentProduct.images[0];
+        if(currentProduct.images && currentProduct.images.length > 0) {
+            document.getElementById('prod-img').src = currentProduct.images[0];
+        }
 
         function selectSize(size, btn) {
             selectedSize = size;
@@ -202,9 +137,11 @@
 
         function selectColor(color, imgIndex, btn) {
             selectedColor = color;
-            activeImageIndex = imgIndex < currentProduct.images.length ? imgIndex : 0;
+            activeImageIndex = (currentProduct.images && imgIndex < currentProduct.images.length) ? imgIndex : 0;
             document.getElementById('selected-color-text').innerText = color;
-            document.getElementById('prod-img').src = currentProduct.images[activeImageIndex];
+            if(currentProduct.images && currentProduct.images[activeImageIndex]) {
+                document.getElementById('prod-img').src = currentProduct.images[activeImageIndex];
+            }
             document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
         }
@@ -215,7 +152,7 @@
                 id: currentProduct.id, 
                 name: currentProduct.name, 
                 price: currentProduct.price, 
-                img: currentProduct.images[activeImageIndex] || currentProduct.images[0], 
+                img: (currentProduct.images && currentProduct.images[activeImageIndex]) ? currentProduct.images[activeImageIndex] : '', 
                 size: selectedSize, 
                 color: selectedColor, 
                 qty: 1 
