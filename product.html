@@ -36,8 +36,16 @@
 
     <main class="max-w-4xl mx-auto px-3 py-8 flex-1 w-full">
         <div class="card-box p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start bg-white">
-            <div class="relative aspect-[4/5] bg-neutral-100 rounded-2xl overflow-hidden">
-                <img id="prod-img" src="" class="w-full h-full object-cover">
+            
+            <!-- Product Image Slider (Supports up to 4 images) -->
+            <div class="space-y-3">
+                <div class="relative aspect-[4/5] bg-neutral-100 rounded-2xl overflow-hidden shadow-sm">
+                    <img id="prod-img" src="" class="w-full h-full object-cover transition-all duration-300">
+                </div>
+                <!-- Thumbnail Slider Navigation -->
+                <div id="thumbnail-container" class="flex gap-2 overflow-x-auto pb-1">
+                    <!-- Dynamic Thumbnails -->
+                </div>
             </div>
 
             <div class="flex flex-col justify-between h-full space-y-4">
@@ -45,20 +53,15 @@
                     <h1 id="prod-name" class="text-2xl font-bold text-neutral-900"></h1>
                     <p id="prod-price" class="mt-2 text-xl font-bold text-amber-600"></p>
                     
-                    <p class="mt-3 text-sm text-neutral-600 leading-relaxed">
-                        প্রিমিয়াম কটন ফ্যাব্রিক দিয়ে তৈরি অত্যন্ত আরামদায়ক ও ট্রেন্ডি পোশাক। কালার ও কোয়ালিটি ১০০% গ্যারান্টিযুক্ত।
-                    </p>
-
+                    <!-- Color Options (Dynamic based on product) -->
                     <div class="mt-4">
-                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (অপশন): <span id="selected-color-text" class="text-neutral-900">Black</span></label>
+                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (অপশন): <span id="selected-color-text" class="text-neutral-900"></span></label>
                         <div class="flex gap-2 flex-wrap" id="color-options">
-                            <button onclick="selectColor('Black', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-medium">Black</button>
-                            <button onclick="selectColor('White', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">White</button>
-                            <button onclick="selectColor('Navy', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Navy</button>
-                            <button onclick="selectColor('Olive', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Olive</button>
+                            <!-- Dynamic Colors -->
                         </div>
                     </div>
 
+                    <!-- Size Options -->
                     <div class="mt-4">
                         <label class="block text-xs font-semibold text-neutral-500 mb-2">সাইজ:</label>
                         <div class="flex gap-2">
@@ -75,11 +78,17 @@
                     <button onclick="buyNow()" class="bg-amber-600 text-white py-3 rounded-2xl font-medium text-sm hover:bg-amber-700 transition shadow-sm">এখনই কিনুন</button>
                 </div>
 
-                <div class="border-t pt-4 text-center">
-                    <a href="javascript:void(0)" onclick="openChat()" class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-emerald-100 transition w-full">
+                <!-- Chat Button & Full Details Section Below -->
+                <div class="border-t pt-4 space-y-3">
+                    <a href="javascript:void(0)" onclick="openChat()" class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-emerald-100 transition w-full text-center">
                         💬 চ্যাট করুন
                         <span class="block text-[11px] text-emerald-600 font-normal mt-0.5">প্রোডাক্ট সম্পর্কে জানতে মেসেজ করুন</span>
                     </a>
+
+                    <!-- Product Specific Full Details Box -->
+                    <div id="prod-description" class="p-4 bg-neutral-50 border border-neutral-200 rounded-2xl text-xs sm:text-sm text-neutral-700 leading-relaxed">
+                        <!-- Dynamic Description -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,26 +117,64 @@
         </div>
     </footer>
 
-    <!-- products.js ফাইলটি এখানে কানেক্ট করা হলো -->
     <script src="products.js"></script>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id') || "1";
-        
-        // products.js ফাইল থেকে ডেটা লোড করার লজিক
-        const currentProduct = (typeof products !== 'undefined') ? (products.find(p => p.id == productId) || products[0]) : { name: "Product", price: 0, images: [] };
+        const currentProduct = (typeof products !== 'undefined') ? (products.find(p => p.id == productId) || products[0]) : { name: "Product", price: 0, images: [], colors: ["Black"], description: "" };
 
         let selectedSize = 'M';
-        let selectedColor = 'Black';
+        let selectedColor = currentProduct.colors && currentProduct.colors.length > 0 ? currentProduct.colors[0] : 'Black';
         let activeImageIndex = 0;
 
         document.getElementById('page-title').innerText = currentProduct.name + " - Deserve Wear";
         document.getElementById('prod-name').innerText = currentProduct.name;
         document.getElementById('prod-price').innerText = `৳${currentProduct.price}`;
+        document.getElementById('prod-description').innerText = currentProduct.description || "এই প্রডাক্ট সম্পর্কে বিস্তারিত কোনো তথ্য দেওয়া হয়নি।";
+
         if(currentProduct.images && currentProduct.images.length > 0) {
             document.getElementById('prod-img').src = currentProduct.images[0];
+            
+            // Render Thumbnails for Image Slider (Up to 4 images)
+            const thumbContainer = document.getElementById('thumbnail-container');
+            currentProduct.images.forEach((imgUrl, index) => {
+                thumbContainer.innerHTML += `
+                    <button onclick="changeMainImage(${index}, this)" class="thumb-btn flex-shrink-0 w-16 h-20 rounded-xl overflow-hidden border-2 ${index === 0 ? 'border-neutral-900' : 'border-transparent'} bg-neutral-100 transition">
+                        <img src="${imgUrl}" class="w-full h-full object-cover">
+                    </button>
+                `;
+            });
         }
+
+        // Render Dynamic Color Options
+        const colorContainer = document.getElementById('color-options');
+        if(currentProduct.colors && currentProduct.colors.length > 0) {
+            document.getElementById('selected-color-text').innerText = currentProduct.colors[0];
+            currentProduct.colors.forEach((col, index) => {
+                let isFirst = index === 0;
+                colorContainer.innerHTML += `
+                    <button onclick="selectColor('${col}', this)" class="color-btn px-3 py-2 rounded-xl border ${isFirst ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-200 text-neutral-700'} text-xs font-medium transition">${col}</button>
+                `;
+            });
+        }
+
+        function changeMainImage(index, btn) {
+            activeImageIndex = index;
+            document.getElementById('prod-img').src = currentProduct.images[index];
+            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('border-neutral-900'));
+            b.classList.add('border-neutral-900'); // Note: handled via btn passed
+        }
+
+        // Fix for thumbnail border toggle
+        window.changeMainImage = function(index, btn) {
+            activeImageIndex = index;
+            document.getElementById('prod-img').src = currentProduct.images[index];
+            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('border-neutral-900', 'border-2'));
+            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.add('border', 'border-transparent'));
+            btn.classList.remove('border-transparent');
+            btn.classList.add('border-2', 'border-neutral-900');
+        };
 
         function selectSize(size, btn) {
             selectedSize = size;
@@ -135,14 +182,12 @@
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
         }
 
-        function selectColor(color, imgIndex, btn) {
+        function selectColor(color, btn) {
             selectedColor = color;
-            activeImageIndex = (currentProduct.images && imgIndex < currentProduct.images.length) ? imgIndex : 0;
             document.getElementById('selected-color-text').innerText = color;
-            if(currentProduct.images && currentProduct.images[activeImageIndex]) {
-                document.getElementById('prod-img').src = currentProduct.images[activeImageIndex];
-            }
             document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.add('border-neutral-200', 'text-neutral-700'));
+            btn.classList.remove('border-neutral-200', 'text-neutral-700');
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
         }
 
@@ -159,6 +204,7 @@
             });
             localStorage.setItem('deserve_cart', JSON.stringify(cart));
             updateCartBadge();
+            alert('কার্টে যোগ করা হয়েছে!');
         }
 
         function buyNow() {
