@@ -36,7 +36,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full space-y-6">
+    <main class="max-w-4xl mx-auto px-3 py-6 flex-1 w-full space-y-5">
         
         <!-- Header with Title & Search Icon -->
         <div class="flex flex-col gap-3">
@@ -54,14 +54,15 @@
                 <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="w-full bg-white card-box px-4 py-3 text-sm focus:outline-none border border-amber-500/50 shadow-sm">
             </div>
 
-            <!-- Category Filter Buttons (Default Selected: Fashion) -->
-            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-                <button onclick="filterCategory('all', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">All</button>
-                <button onclick="filterCategory('fashion', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-neutral-900 text-white transition whitespace-nowrap">👕 Fashion</button>
-                <button onclick="filterCategory('cosmetics', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">💄 Cosmetics</button>
-                <button onclick="filterCategory('men', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Men's 👕</button>
-                <button onclick="filterCategory('women', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Women's 👗</button>
-                <button onclick="filterCategory('baby', this)" class="cat-btn px-4 py-2 rounded-full text-xs font-bold border border-neutral-200 bg-white text-neutral-700 transition whitespace-nowrap">Baby 🍼</button>
+            <!-- Main Categories: Fashion (Default) & Cosmetics -->
+            <div class="flex gap-2">
+                <button onclick="selectMainCategory('fashion', this)" id="main-cat-fashion" class="main-cat-btn flex-1 py-2.5 rounded-xl text-xs font-bold bg-neutral-900 text-white transition shadow-sm text-center">👕 Fashion</button>
+                <button onclick="selectMainCategory('cosmetics', this)" id="main-cat-cosmetics" class="main-cat-btn flex-1 py-2.5 rounded-xl text-xs font-bold bg-white border border-neutral-200 text-neutral-700 transition shadow-sm text-center">💄 Cosmetics</button>
+            </div>
+
+            <!-- Sub-Categories Row (Changes based on Main Category) -->
+            <div id="sub-category-container" class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                <!-- Dynamically populated via JavaScript -->
             </div>
         </div>
 
@@ -95,7 +96,8 @@
     <script src="products.js"></script>
 
     <script>
-        let currentCategory = 'fashion'; // ডিফল্টভাবে Fashion সিলেクト করা থাকবে
+        let currentMainCat = 'fashion'; // Default Main Category
+        let currentSubCat = 'all';     // Default Sub Category
 
         function toggleSearchBox() {
             const searchContainer = document.getElementById('search-container');
@@ -105,13 +107,67 @@
             }
         }
 
-        function filterCategory(category, btn) {
-            currentCategory = category;
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.classList.remove('bg-neutral-950', 'text-white');
-                b.classList.add('border', 'border-neutral-200', 'bg-white', 'text-neutral-700');
+        function selectMainCategory(mainCat, btn) {
+            currentMainCat = mainCat;
+            
+            // Style Main Category Buttons
+            document.querySelectorAll('.main-cat-btn').forEach(b => {
+                b.classList.remove('bg-neutral-900', 'text-white');
+                b.classList.add('bg-white', 'border', 'border-neutral-200', 'text-neutral-700');
             });
-            btn.classList.remove('border', 'border-neutral-200', 'bg-white', 'text-neutral-700');
+            btn.classList.remove('bg-white', 'border', 'border-neutral-200', 'text-neutral-700');
+            btn.classList.add('bg-neutral-900', 'text-white');
+
+            // Set default sub-category based on main category
+            if (mainCat === 'fashion') {
+                currentSubCat = 'all';
+            } else if (mainCat === 'cosmetics') {
+                currentSubCat = 'women';
+            }
+
+            renderSubCategories();
+            renderProducts();
+        }
+
+        function renderSubCategories() {
+            const subContainer = document.getElementById('sub-category-container');
+            subContainer.innerHTML = '';
+
+            if (currentMainCat === 'fashion') {
+                const fashionSubs = [
+                    { id: 'all', name: 'All Fashion' },
+                    { id: 'men', name: "Men's 👕" },
+                    { id: 'women', name: "Women's 👗" },
+                    { id: 'baby', name: 'Baby 🍼' }
+                ];
+
+                fashionSubs.forEach(sub => {
+                    let isSelected = currentSubCat === sub.id;
+                    subContainer.innerHTML += `
+                        <button onclick="selectSubCategory('${sub.id}', this)" class="sub-cat-btn px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap ${isSelected ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-200 text-neutral-700'}">${sub.name}</button>
+                    `;
+                });
+            } else if (currentMainCat === 'cosmetics') {
+                const cosmeticsSubs = [
+                    { id: 'women', name: "Women's (Cosmetics) 💄" }
+                ];
+
+                cosmeticsSubs.forEach(sub => {
+                    let isSelected = currentSubCat === sub.id;
+                    subContainer.innerHTML += `
+                        <button onclick="selectSubCategory('${sub.id}', this)" class="sub-cat-btn px-4 py-2 rounded-full text-xs font-bold transition whitespace-nowrap ${isSelected ? 'bg-neutral-900 text-white' : 'bg-white border border-neutral-200 text-neutral-700'}">${sub.name}</button>
+                    `;
+                });
+            }
+        }
+
+        function selectSubCategory(subCat, btn) {
+            currentSubCat = subCat;
+            document.querySelectorAll('.sub-cat-btn').forEach(b => {
+                b.classList.remove('bg-neutral-900', 'text-white');
+                b.classList.add('bg-white', 'border', 'border-neutral-200', 'text-neutral-700');
+            });
+            btn.classList.remove('bg-white', 'border', 'border-neutral-200', 'text-neutral-700');
             btn.classList.add('bg-neutral-900', 'text-white');
             renderProducts();
         }
@@ -122,9 +178,24 @@
             grid.innerHTML = '';
 
             let filtered = products.filter(p => {
-                let matchesCategory = currentCategory === 'all' || (p.category && p.category.toLowerCase() === currentCategory);
+                let pCat = (p.category || '').toLowerCase();
+                let matchesMain = false;
+
+                if (currentMainCat === 'fashion') {
+                    matchesMain = (pCat === 'fashion' || pCat === 'men' || pCat === 'women' || pCat === 'baby');
+                } else if (currentMainCat === 'cosmetics') {
+                    matchesMain = (pCat === 'cosmetics');
+                }
+
+                let matchesSub = true;
+                if (currentMainCat === 'fashion' && currentSubCat !== 'all') {
+                    matchesSub = (pCat === currentSubCat);
+                } else if (currentMainCat === 'cosmetics') {
+                    matchesSub = (pCat === 'cosmetics' || pCat === 'women');
+                }
+
                 let matchesSearch = p.name.toLowerCase().includes(searchText);
-                return matchesCategory && matchesSearch;
+                return matchesMain && matchesSub && matchesSearch;
             });
 
             if(filtered.length === 0) {
@@ -159,7 +230,8 @@
             document.getElementById('cart-count').innerText = cart.length;
         }
 
-        // পেজ লোড হওয়ার সাথে সাথে ডিফল্ট 'fashion' ক্যাটাগরি অনুযায়ী প্রোডাক্ট দেখাবে
+        // Initial Load
+        renderSubCategories();
         renderProducts();
     </script>
 </body>
