@@ -10,7 +10,6 @@
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
         .card-box { background: #ffffff; border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
         
-        /* High Highlight Orange-Red Shadow for Search Box & See All Product */
         .search-shadow, #btn-see-all {
             box-shadow: 0 0 15px rgba(249, 115, 22, 0.45), 0 0 6px rgba(239, 68, 68, 0.35);
             border: 1px solid rgba(249, 115, 22, 0.65);
@@ -91,20 +90,17 @@
         <div class="space-y-4">
             <div class="flex justify-between items-center px-1">
                 <h1 id="t-all-prod-heading" class="text-2xl font-bold">✨ Trendy Collection</h1>
-                <!-- Language Switcher -->
                 <div class="flex bg-neutral-200 p-1 rounded-xl text-xs font-bold">
                     <button onclick="setLang('bn')" id="lang-bn" class="px-2.5 py-1 rounded-lg bg-neutral-900 text-white transition">বাংলা</button>
                     <button onclick="setLang('en')" id="lang-en" class="px-2.5 py-1 rounded-lg text-neutral-700 transition">ENG</button>
                 </div>
             </div>
             
-            <!-- Search Box with Orange-Red Highlight Shadow -->
             <div class="flex gap-2">
                 <input type="text" id="search-input" onkeyup="filterProducts()" placeholder="প্রোডাক্ট খুঁজুন..." class="flex-1 bg-white card-box search-shadow px-4 py-3 text-sm focus:outline-none">
                 <button onclick="filterProducts()" id="t-search-btn" class="bg-neutral-900 text-white px-6 py-3 rounded-2xl font-medium text-sm hover:bg-neutral-800 transition">খুঁজুন</button>
             </div>
 
-            <!-- Left: Popular Now, Right: See All Product (with Orange-Red Shadow) -->
             <div class="flex justify-between items-center pt-1">
                 <button id="btn-pop" onclick="switchHomeTab('pop')" class="bg-neutral-900 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition">🔥 Popular Now</button>
                 <div class="flex-1"></div>
@@ -112,10 +108,8 @@
             </div>
         </div>
 
-        <!-- Product Grid -->
         <div id="product-grid" class="grid grid-cols-2 gap-4 sm:grid-cols-3"></div>
 
-        <!-- Deserve Wear Card Box (Placed right under products) -->
         <div class="card-box px-6 py-6 space-y-4 text-left mt-8">
             <div class="footer-brand inline-flex items-baseline">
                 <span><span class="fb-d">D</span><span class="fb-eserve">eserve</span></span>
@@ -138,18 +132,10 @@
         </div>
     </main>
 
-    <script>
-        const products = [
-            { id: 1, name: "Baby Winter Jacket", price: 750, oldPrice: 999, category: "baby", hotSale: true, img: "https://i.postimg.cc/y8dRrfTj/1794646402504.jpg" },
-            { id: 2, name: "Oversized Drop Shoulder Tee", price: 650, oldPrice: null, category: "men", hotSale: false, img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
-            { id: 3, name: "Premium Fleece Hoodie", price: 1450, oldPrice: 1750, category: "women", hotSale: true, img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
-            { id: 4, name: "Zipper Hoodie", price: 1650, oldPrice: 1800, category: "women", hotSale: false, img: "https://i.ibb.co.com/1Yngh2Wb/Screenshot-20261109-224322.jpg" },
-            { id: 5, name: "Baby Soft Winter Suit", price: 850, oldPrice: 1000, category: "baby", hotSale: true, img: "https://i.ibb.co.com/rfHFcgXG/Screenshot-20261109-225115.jpg" },
-            { id: 6, name: "Men's Formal Polo", price: 750, oldPrice: 900, category: "men", hotSale: false, img: "https://i.ibb.co.com/WWfp4JFR/Screenshot-20261109-223334.jpg" },
-            { id: 7, name: "Women's Stylish Kurti", price: 1150, oldPrice: 1400, category: "women", hotSale: false, img: "https://i.ibb.co.com/7x6mMGZD/Screenshot-20261109-224612.jpg" },
-            { id: 8, name: "Alamin Priya", price: 999, oldPrice: 1250, category: "women", hotSale: true, img: "https://i.postimg.cc/T3n2jjVY/3e14d2fb-5e2d-40ef-a68f-c476032fa3ac-1-all-45-removebg-preview.png" }
-        ];
+    <!-- products.js ফাইলটি এখানে কানেক্ট করা হলো -->
+    <script src="products.js"></script>
 
+    <script>
         let currentLang = localStorage.getItem('site_lang') || 'bn';
 
         const dict = {
@@ -223,6 +209,12 @@
             const grid = document.getElementById('product-grid');
             grid.innerHTML = '';
 
+            // products.js ফাইল না থাকলে বা ফাঁকা থাকলে যাতে কোনো এরর না ধরে সেজন্য চেক করা হচ্ছে
+            if (typeof products === 'undefined') {
+                grid.innerHTML = '<p class="col-span-full text-center py-8 text-neutral-400 text-sm">products.js ফাইল পাওয়া যায়নি বা ফাঁকা আছে!</p>';
+                return;
+            }
+
             let filtered = products.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase())).slice(0, 8);
 
             if(filtered.length === 0) {
@@ -231,10 +223,11 @@
             }
 
             filtered.forEach(p => {
+                let displayImg = Array.isArray(p.images) ? p.images[0] : (p.img || '');
                 grid.innerHTML += `
                     <a href="product.html?id=${p.id}" class="card-box overflow-hidden block group transition transform active:scale-95 bg-white">
                         <div class="relative aspect-[4/5] bg-neutral-100 overflow-hidden">
-                            <img src="${p.img}" class="object-cover w-full h-full group-hover:scale-105 transition duration-300">
+                            <img src="${displayImg}" class="object-cover w-full h-full group-hover:scale-105 transition duration-300">
                             ${p.hotSale ? '<span class="absolute top-2 left-2 bg-gradient-to-r from-red-600 to-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">🔥 Hot Sale</span>' : ''}
                         </div>
                         <div class="p-3">
