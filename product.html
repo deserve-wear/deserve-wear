@@ -50,12 +50,12 @@
                     </p>
 
                     <div class="mt-4">
-                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (৪টি অপশন): <span id="selected-color-text" class="text-neutral-900">Black</span></label>
+                        <label class="block text-xs font-semibold text-neutral-500 mb-2">রং (অপশন): <span id="selected-color-text" class="text-neutral-900">Black</span></label>
                         <div class="flex gap-2 flex-wrap" id="color-options">
                             <button onclick="selectColor('Black', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-900 bg-neutral-900 text-white text-xs font-medium">Black</button>
-                            <button onclick="selectColor('White', 1, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">White</button>
-                            <button onclick="selectColor('Navy', 2, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Navy</button>
-                            <button onclick="selectColor('Olive', 3, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Olive</button>
+                            <button onclick="selectColor('White', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">White</button>
+                            <button onclick="selectColor('Navy', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Navy</button>
+                            <button onclick="selectColor('Olive', 0, this)" class="color-btn px-3 py-2 rounded-xl border border-neutral-200 text-xs font-medium">Olive</button>
                         </div>
                     </div>
 
@@ -176,7 +176,7 @@
             { 
                 id: 8, name: "Alamin Priya", price: 999, 
                 images: [
-                    "https://i.postimg.cc/T3n2jjVY/3e14d2fb-5e2d-40ef-a68f-c476032fa3ac-1-all-45-removebg-preview.png
+                    "https://i.postimg.cc/T3n2jjVY/3e14d2fb-5e2d-40ef-a68f-c476032fa3ac-1-all-45-removebg-preview.png"
                 ] 
             }
         ];
@@ -202,9 +202,9 @@
 
         function selectColor(color, imgIndex, btn) {
             selectedColor = color;
-            activeImageIndex = imgIndex;
+            activeImageIndex = imgIndex < currentProduct.images.length ? imgIndex : 0;
             document.getElementById('selected-color-text').innerText = color;
-            document.getElementById('prod-img').src = currentProduct.images[imgIndex];
+            document.getElementById('prod-img').src = currentProduct.images[activeImageIndex];
             document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('border-neutral-900', 'bg-neutral-900', 'text-white'));
             btn.classList.add('border-neutral-900', 'bg-neutral-900', 'text-white');
         }
@@ -215,14 +215,13 @@
                 id: currentProduct.id, 
                 name: currentProduct.name, 
                 price: currentProduct.price, 
-                img: currentProduct.images[activeImageIndex], 
+                img: currentProduct.images[activeImageIndex] || currentProduct.images[0], 
                 size: selectedSize, 
                 color: selectedColor, 
                 qty: 1 
             });
             localStorage.setItem('deserve_cart', JSON.stringify(cart));
             updateCartBadge();
-            // No alert popup shown
         }
 
         function buyNow() {
